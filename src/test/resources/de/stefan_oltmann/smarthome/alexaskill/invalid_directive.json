@@ -1,0 +1,11 @@
+{
+  "directive": {
+    "header": {
+      "namespace": "Alexa.NamespaceThatDoesNotExist",
+      "name": "WhoKnows",
+      "payloadVersion": "3",
+      "messageId": "<message id>"
+    },
+    "payload": {}
+  }
+}

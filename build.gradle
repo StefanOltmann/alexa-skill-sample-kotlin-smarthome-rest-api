@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+}
+
+description = 'Stefans Smart Home Alexa Skill'
+group 'de.stefan_oltmann.smarthome.alexaskill'
+version '1.0'
+
+repositories {
+     mavenCentral()
+     jcenter()
+     google()
+}
+
+ext {
+
+    kotlinVersion = '1.4.10'
+    retrofitVersion = '2.9.0'
+    junitVersion = '5.4.2'
+    mockitoVersion = '3.6.0'
+    awsLambdaJavaCore = '1.2.1'
+}
+
+dependencies {
+
+    // Kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+
+    // AWS Lambda Framework
+    compile "com.amazonaws:aws-lambda-java-core:$awsLambdaJavaCore"
+
+    // REST API Calls
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    // Unit Tests
+    testCompile "org.junit.jupiter:junit-jupiter:$junitVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

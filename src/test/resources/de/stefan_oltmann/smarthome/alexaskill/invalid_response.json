@@ -1,0 +1,14 @@
+{
+  "event": {
+    "header": {
+      "namespace": "Alexa",
+      "name": "ErrorResponse",
+      "payloadVersion": "3",
+      "messageId": "MESSAGE_ID"
+    },
+    "payload": {
+      "type": "INVALID_DIRECTIVE",
+      "message": "Request is invalid."
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "event": {
+    "header": {
+      "namespace": "Alexa.Discovery",
+      "name": "Discover.Response",
+      "payloadVersion": "3",
+      "messageId": "MESSAGE_ID"
+    },
+    "payload": {
+      "endpoints": [
+        {
+          "endpointId": "power_plug",
+          "friendlyName": "Switchable device",
+          "description": "Device that only has a power state.",
+          "manufacturerName": "Smart Home",
+          "capabilities": [
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa",
+              "version": "3"
+            },
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa.PowerController",
+              "version": "3",
+              "properties": {
+                "supported": [
+                  {
+                    "name": "powerState"
+                  }
+                ]
+              }
+            }
+          ],
+          "displayCategories": [
+            "SWITCH"
+          ]
+        },
+        {
+          "endpointId": "dimmer",
+          "friendlyName": "Dimmer",
+          "description": "Device that handles power states as well as percentages.",
+          "manufacturerName": "Smart Home",
+          "capabilities": [
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa",
+              "version": "3"
+            },
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa.PowerController",
+              "version": "3",
+              "properties": {
+                "supported": [
+                  {
+                    "name": "powerState"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa",
+              "version": "3"
+            },
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa.PercentageController",
+              "version": "3",
+              "properties": {
+                "supported": [
+                  {
+                    "name": "percentage"
+                  }
+                ]
+              }
+            }
+          ],
+          "displayCategories": [
+            "LIGHT"
+          ]
+        },
+        {
+          "endpointId": "rollershutter",
+          "friendlyName": "Rollershutter",
+          "description": "Device that only takes percentage.",
+          "manufacturerName": "Smart Home",
+          "capabilities": [
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa",
+              "version": "3"
+            },
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa.PercentageController",
+              "version": "3",
+              "properties": {
+                "supported": [
+                  {
+                    "name": "percentage"
+                  }
+                ]
+              }
+            }
+          ],
+          "displayCategories": [
+            "EXTERIOR_BLIND"
+          ]
+        }
+      ]
+    }
+  }
+}
