@@ -1,4 +1,4 @@
-# Alexa Skill Sample: Smarthome REST API (Kotlin)
+# Alexa Skill Sample: Smart Home REST API (Kotlin)
 
 This is a basic Alexa Smart Home skill sample that uses a REST API as backend. 
 
@@ -18,4 +18,4 @@ I wrote this clean Kotlin version after reviewing the [official Alexa Smart Home
 
 This library is licensed under Apache License 2.0.
 
-Feel free to modifiy and extend it to fit your needs.
+Feel free to modify and extend it to fit your needs.

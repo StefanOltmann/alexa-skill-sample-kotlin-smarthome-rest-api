@@ -22,7 +22,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * A capability is something a device can do like be turned off and on (power control)
- * as well as set to a specific value (percentage control) which applies to dimmers and rollershutters.
+ * as well as set to a specific value (percentage control) which applies to dimmers and roller shutters.
  */
 data class Capability (
         val type : String = "AlexaInterface",

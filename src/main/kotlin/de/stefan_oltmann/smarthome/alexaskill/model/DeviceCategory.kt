@@ -19,20 +19,16 @@
 package de.stefan_oltmann.smarthome.alexaskill.model
 
 /**
- * This is useful to have a nice icon in the Alexa App
+ * This is useful to have a nice icon in the Alexa App and nothing else.
+ *
+ * This is Alexa specific and determined from the {@link DeviceType}.
  */
 enum class DeviceCategory {
 
     /** Lights */
     LIGHT,
 
-    /** Power switches that are not lights */
-    SWITCH,
-
-    /** Rollershutter */
-    EXTERIOR_BLIND,
-
-    /** If no other category fits */
-    OTHER
+    /** Roller shutter */
+    EXTERIOR_BLIND
 
 }

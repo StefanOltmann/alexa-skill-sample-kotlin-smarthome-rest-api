@@ -40,8 +40,20 @@ class AlexaHandler {
 
     companion object {
 
-        /* Likely your name if these are your devices. */
+        /*
+         * Likely your name if these are your devices.
+         * Must not be empty.
+         */
         const val MANUFACTURER_NAME = "Smart Home"
+
+        /*
+         * A placeholder description for the devices.
+         * Must not be empty.
+         */
+        const val DEVICE_DESCRIPTION = "-"
+
+        const val UNIT_TEST_MESSAGE_ID = "MESSAGE_ID"
+        const val UNIT_TEST_TIMESTAMP = 1577885820000
     }
 
     /**
@@ -100,7 +112,7 @@ class AlexaHandler {
     }
 
     /**
-     * This methodes takes in the request as JSON string and returns the response as JSON string.
+     * This method takes in the request as JSON string and returns the response as JSON string.
      *
      * It delegates to handleRequestObject() which then works on the object level.
      */
@@ -134,7 +146,7 @@ class AlexaHandler {
             Header.NAMESPACE_AUTHORIZATION -> return createAuthorizationGrantedResponse()
 
             /**
-             * This is the second call to this skill after succesful authorization:
+             * This is the second call to this skill after successful authorization:
              * Alexa needs to find all our devices for configuration.
              *
              * This is called only on user interaction. Alexa will cache the discovery result.
@@ -182,23 +194,23 @@ class AlexaHandler {
     }
 
     /**
-     * Calls the backend API for the devieces and creates a Discovery response.
+     * Calls the backend API for the devices and creates a Discovery response.
      */
     private fun createDeviceDiscoveryResponse(restApi: RestApi) : AlexaResponse {
 
         /* Fetch all the devices from the REST API */
-        val deviceListResponse = restApi.findAllDevices().execute()
+        val devicesResponse = restApi.findAllDevices().execute()
 
-        /* Return ASAP if a problem occured. */
-        if (!deviceListResponse.isSuccessful)
+        /* Return ASAP if a problem occurred. */
+        if (!devicesResponse.isSuccessful)
             return createErrorResponse()
 
-        val deviceList = deviceListResponse.body()
+        val devices = devicesResponse.body()
 
         /**
          * It's very helpful for debugging to see which devices are actually returned by the backend API.
          */
-        println("Devices from API: $deviceList")
+        println("Devices from API: $devices")
 
         /*
          * Creation of capabilities our devices need.
@@ -225,34 +237,37 @@ class AlexaHandler {
          */
         val endpoints = mutableListOf<DiscoveryEndpoint>()
 
-        for (device in deviceList!!.devices) {
+        if (devices != null) {
 
-            /*
+            for (device in devices) {
+
+                /*
              * Devices can have many capabilities and you can mix them like you need it.
              */
-            val capabilities = mutableListOf<Capability>()
+                val capabilities = mutableListOf<Capability>()
 
-            for (capability in device.capabilities) {
+                for (capability in device.capabilities) {
 
-                /* We always need this base capatibility. */
-                capabilities.add(alexaCapability)
+                    /* We always need this base capability. */
+                    capabilities.add(alexaCapability)
 
-                /* Add other capabilities based on supported functions. */
-                when (capability) {
-                    DeviceCapability.POWER_STATE -> capabilities.add(powerControllerCapability)
-                    DeviceCapability.PERCENTAGE -> capabilities.add(percentageControllerCapability)
+                    /* Add other capabilities based on supported functions. */
+                    when (capability) {
+                        DeviceCapability.POWER_STATE -> capabilities.add(powerControllerCapability)
+                        DeviceCapability.PERCENTAGE -> capabilities.add(percentageControllerCapability)
+                    }
                 }
+
+                val discoveryEndpoint = DiscoveryEndpoint(
+                        endpointId = device.id,
+                        friendlyName = device.name,
+                        description = DEVICE_DESCRIPTION,
+                        manufacturerName = MANUFACTURER_NAME,
+                        capabilities = capabilities,
+                        displayCategories = listOf(device.category.name))
+
+                endpoints.add(discoveryEndpoint)
             }
-
-            val discoveryEndpoint = DiscoveryEndpoint(
-                endpointId = device.id,
-                friendlyName = device.name,
-                description = device.description,
-                manufacturerName = MANUFACTURER_NAME,
-                capabilities = capabilities,
-                displayCategories = listOf(device.category.name))
-
-            endpoints.add(discoveryEndpoint)
         }
 
         return AlexaResponse(
@@ -413,14 +428,14 @@ class AlexaHandler {
      *
      * This method creates that. Expect we are in unitTesting mode.
      */
-    private fun createMessageId() = if (unitTesting) "MESSAGE_ID" else UUID.randomUUID().toString()
+    private fun createMessageId() = if (unitTesting) UNIT_TEST_MESSAGE_ID else UUID.randomUUID().toString()
 
     private fun createCurrentTimeString() : String {
 
-        val timestamp = if (unitTesting) 1577885820000 else Date().time
+        val timestamp = if (unitTesting) UNIT_TEST_TIMESTAMP else Date().time
 
-        val simpleDataFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
-        simpleDataFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val simpleDataFormat = SimpleDateFormat(ContextProperties.DATE_FORMAT_PATTERN)
+        simpleDataFormat.timeZone = TimeZone.getTimeZone(ContextProperties.DATE_FORMAT_TIMEZONE)
 
         return simpleDataFormat.format(timestamp)
     }

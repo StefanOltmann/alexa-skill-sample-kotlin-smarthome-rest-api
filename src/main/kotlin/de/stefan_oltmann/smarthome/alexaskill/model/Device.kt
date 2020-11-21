@@ -19,12 +19,17 @@
 package de.stefan_oltmann.smarthome.alexaskill.model
 
 /*
- * A device like a light switch, a dimmer or a rollershutter.
+ * A device like a light switch, a dimmer or a roller shutter.
  *
  * Alexa calls these "endpoints".
  */
 data class Device(val id: String,
                   val name: String,
-                  val description: String,
-                  val category: DeviceCategory,
-                  val capabilities: List<DeviceCapability>)
+                  val type: DeviceType) {
+
+    val category: DeviceCategory
+        get() = type.deviceCategory
+
+    val capabilities: List<DeviceCapability>
+        get() = type.deviceCapabilities
+}

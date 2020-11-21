@@ -26,6 +26,10 @@ data class ContextProperties (
         val value : String) {
 
     companion object {
+
         const val UNCERTAINTY_IN_MS = 200
+
+        const val DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.sss'Z'"
+        const val DATE_FORMAT_TIMEZONE = "UTC"
     }
 }

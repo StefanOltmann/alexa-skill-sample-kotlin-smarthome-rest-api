@@ -11,7 +11,7 @@
         {
           "endpointId": "power_plug",
           "friendlyName": "Switchable device",
-          "description": "Device that only has a power state.",
+          "description": "-",
           "manufacturerName": "Smart Home",
           "capabilities": [
             {
@@ -33,13 +33,13 @@
             }
           ],
           "displayCategories": [
-            "SWITCH"
+            "LIGHT"
           ]
         },
         {
           "endpointId": "dimmer",
           "friendlyName": "Dimmer",
-          "description": "Device that handles power states as well as percentages.",
+          "description": "-",
           "manufacturerName": "Smart Home",
           "capabilities": [
             {
@@ -82,11 +82,28 @@
           ]
         },
         {
-          "endpointId": "rollershutter",
-          "friendlyName": "Rollershutter",
-          "description": "Device that only takes percentage.",
+          "endpointId": "roller_shutter",
+          "friendlyName": "Roller shutter",
+          "description": "-",
           "manufacturerName": "Smart Home",
           "capabilities": [
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa",
+              "version": "3"
+            },
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa.PowerController",
+              "version": "3",
+              "properties": {
+                "supported": [
+                  {
+                    "name": "powerState"
+                  }
+                ]
+              }
+            },
             {
               "type": "AlexaInterface",
               "interface": "Alexa",

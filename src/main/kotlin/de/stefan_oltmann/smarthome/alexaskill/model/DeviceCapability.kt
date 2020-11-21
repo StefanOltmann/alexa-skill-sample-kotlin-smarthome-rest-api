@@ -18,12 +18,17 @@
 
 package de.stefan_oltmann.smarthome.alexaskill.model
 
+/**
+ * This represents what can be done with the device.
+ *
+ * This is Alexa specific and determined from the {@link DeviceType}.
+ */
 enum class DeviceCapability {
 
     /** Can be turned on and off */
     POWER_STATE,
 
-    /** Can take a percent value (e.g. Dimmers or Rollershutters) */
-    PERCENTAGE
+    /** Can take a percent value (e.g. Dimmers or Roller shutters) */
+    PERCENTAGE;
 
 }

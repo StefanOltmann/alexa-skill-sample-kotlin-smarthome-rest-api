@@ -44,7 +44,7 @@ internal class AlexaHandlerTest {
     private val handler = AlexaHandler().apply { unitTesting = true }
 
     /**
-     * A namespace that is not handled by this skill should result in an proper error reponse.
+     * A namespace that is not handled by this skill should result in an proper error response.
      */
     @Test
     fun `Handle invalid Request`() {
@@ -95,34 +95,28 @@ internal class AlexaHandlerTest {
          * Return mock data if the restApi is called.
          */
 
-        val deviceList = DeviceList(listOf(
+        val devices = listOf(
                 Device("power_plug",
                         "Switchable device",
-                        "Device that only has a power state.",
-                        DeviceCategory.SWITCH,
-                        listOf(DeviceCapability.POWER_STATE)),
+                        DeviceType.LIGHT_SWITCH),
                 Device(
                         "dimmer",
                         "Dimmer",
-                        "Device that handles power states as well as percentages.",
-                        DeviceCategory.LIGHT,
-                        listOf(DeviceCapability.POWER_STATE, DeviceCapability.PERCENTAGE)
+                        DeviceType.DIMMER
                 ),
                 Device(
-                        "rollershutter",
-                        "Rollershutter",
-                        "Device that only takes percentage.",
-                        DeviceCategory.EXTERIOR_BLIND,
-                        listOf(DeviceCapability.PERCENTAGE)
+                        "roller_shutter",
+                        "Roller shutter",
+                        DeviceType.ROLLER_SHUTTER
                 )
-        ))
+        )
 
         val restApiMock = mock(RestApi::class.java)
 
-        val callMock = mock(Call::class.java) as Call<DeviceList>
+        val callMock = mock(Call::class.java) as Call<List<Device>>
 
         `when`(restApiMock.findAllDevices()).thenReturn(callMock)
-        `when`(callMock.execute()).thenReturn(Response.success(deviceList))
+        `when`(callMock.execute()).thenReturn(Response.success(devices))
 
         /*
          * Check response
@@ -180,7 +174,7 @@ internal class AlexaHandlerTest {
     }
 
     /**
-     * Dimms a light.
+     * Dim a light.
      */
     @Test
     fun `Handle Percentage Controller Request`() {

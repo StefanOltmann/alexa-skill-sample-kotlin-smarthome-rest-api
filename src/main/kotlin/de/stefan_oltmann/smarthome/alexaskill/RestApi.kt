@@ -18,7 +18,7 @@
 
 package de.stefan_oltmann.smarthome.alexaskill
 
-import de.stefan_oltmann.smarthome.alexaskill.model.DeviceList
+import de.stefan_oltmann.smarthome.alexaskill.model.Device
 import de.stefan_oltmann.smarthome.alexaskill.model.DevicePowerState
 import retrofit2.Call
 import retrofit2.http.GET
@@ -30,7 +30,7 @@ interface RestApi {
      * Returns all devices for device discovery.
      */
     @GET("/alexa/devices")
-    fun findAllDevices(): Call<DeviceList>
+    fun findAllDevices(): Call<List<Device>>
 
     /**
      * Turns a device (for e.g. a light) on and off.
@@ -40,7 +40,7 @@ interface RestApi {
                       @Path("powerState") powerState: DevicePowerState): Call<Void>
 
     /**
-     * Sets a percentage value to a device. For example a dimmer or a rollershutter.
+     * Sets a percentage value to a device. For example a dimmer or a roller shutter.
      */
     @GET("/alexa/set/{endpointId}/to/{percentage}")
     fun setPercentage(@Path("endpointId") endpointId: String,
